@@ -19,11 +19,15 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 const DB_URI = process.env.DB_URI;
 
-mongoose.connect(DB_URI)
+console.log("Attempting to connect to:", DB_URI ? DB_URI.replace(/:[^:@]+@/, ":****@") : "URI IS MISSING!");
+
+mongoose.connect(DB_URI, { 
+    serverSelectionTimeoutMS: 5000 // Give up after 5 seconds if it can't connect
+})
     .then(() => {
         console.log('Connected to MongoDB');
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
     })
     .catch(err => {
-        console.error('Could not connect to MongoDB:', err);
+        console.error('CRITICAL ERROR: Could not connect to MongoDB:', err);
     });
