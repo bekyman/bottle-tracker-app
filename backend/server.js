@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const ledgerRoutes = require('./routes/ledgerRoutes');
 
+app.use('/api/orders', orderRoutes);
+app.use('/api/ledger', ledgerRoutes);
 const app = express();
 
 app.use(cors());
